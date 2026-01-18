@@ -1,0 +1,15 @@
+#define _POSIX_C_SOURCE 200809L
+#include "stdio.h"
+
+int main() {
+  char* buf = NULL;
+  size_t len = 0;
+  ssize_t read;
+  printf("Please enter some text: ");  
+  while ((read = getline(&buf, &len, stdin)) != -1) {
+    printf("Received line of length %zd\n", read);
+  }
+
+  return 0;
+}
+  

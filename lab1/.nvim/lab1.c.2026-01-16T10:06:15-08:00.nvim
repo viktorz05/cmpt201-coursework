@@ -1,0 +1,14 @@
+#define _POSIX_C_SOURCE 200809L
+#include "stdlib.h"
+#include "stdio.h"
+
+int main() {
+  char *buf = NULL;
+  size_t len = 0;
+  ssize_t read;
+  printf("Please enter some text: ");
+  read = getline(&buf, &len, stdin);
+  printf("Received line of length %zd\n", read);
+  free(buf);
+  return 0;
+}
