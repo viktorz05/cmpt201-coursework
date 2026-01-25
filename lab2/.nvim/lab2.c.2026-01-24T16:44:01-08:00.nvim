@@ -15,14 +15,15 @@ int main() {
     if ((read = getline(&buf, &len, stdin)) == -1) {
       perror("Failed to read line!\n");
     } else {
-      if (read > 0 && buf[read - 1] == '\n') {
-        buf[read - 1] = '\0';
+      if (len > 0 && buf[len -1] == '\n') {
+        buf[len - 1] = '\0';
       }
       pid_t pid = fork();
       if (pid < 0) {
         perror("fork() failed!\n");
         continue;
-      } else if (pid > 0) {
+      }
+      else if (pid > 0) {
         int wstatus = 0;
         if (waitpid(pid, &wstatus, 0) == -1) {
           perror("waitpid");
@@ -32,13 +33,14 @@ int main() {
           printf("Child exited.\n");
         }
       } else {
-        if (execl(buf, buf, (char *)NULL) == -1) {
-          perror("execl");
-          free(buf);
-          exit(EXIT_FAILURE);
+         if (execl(buf, buf, (char *)NULL) == -1) {
+            perror("execl");
+            free(buf);
+            exit(EXIT_FAILURE);
+          }
         }
       }
     }
-  }
   return 0;
 }
+

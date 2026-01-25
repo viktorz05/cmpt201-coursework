@@ -1,0 +1,29 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+void my_tokenize(char* buf, char* saveptr) {
+  char* tok = NULL;
+  tok = strtok_r(buf, " ", &saveptr);
+  while (tok != NULL) {
+    printf("%s\n", tok);
+    tok = strtok_r(NULL, " ", &saveptr);
+  }
+}
+int main() {
+  char *buf = NULL;
+  char *saveptr = NULL;
+  size_t len = 0;
+  ssize_t read;
+  printf("Enter programs to run.\n> ");
+  if ((read = getline(&buf, &len, stdin)) == -1) {
+    perror("Failed to read line!\n");
+  } else {
+    my_tokenize(buf, saveptr);
+  }
+  return 0;
+}
+
