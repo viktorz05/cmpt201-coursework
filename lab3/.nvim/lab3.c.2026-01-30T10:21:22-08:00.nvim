@@ -1,0 +1,16 @@
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char *read_input() {
+
+  char *line = NULL;
+  ssize_t read;
+  size_t len = 0;
+
+  if ((read = getline(&line, &len, stdin)) != -1) {
+    printf("Enter input:");
+  }
+
+}
