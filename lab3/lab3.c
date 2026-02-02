@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_SIZE 5
+#define MAX_CAPACITY 5
 
 char *read_input() {
 
@@ -16,31 +16,35 @@ char *read_input() {
     perror("getline failed!\n");
   } else if (read > 0 && line[read - 1] == '\n') {
     line[read - 1] = '\0';
-  } else {
-    exit(1);
   }
   return line;
 }
 
-void store_history() {}
-void replace_history() {}
-
 void print(char **history, int count) {
 
-  for (int i = 0; i < count; i++) {
-    printf("%s\n", history[i]);
+  int print_total = count < MAX_CAPACITY ? count : MAX_CAPACITY;
+  int start = count < MAX_CAPACITY ? 0 : count % 5;
+
+  for (int i = 0; i < print_total; i++) {
+    int idx = (start + i) % MAX_CAPACITY;
+    printf("%s\n", history[idx]);
   }
 }
 
 int main() {
-  char *history[MAX_SIZE] = {0};
+  char *history[MAX_CAPACITY] = {0};
   int count = 0;
+  int index = 0;
   while (1) {
     char *input = read_input();
-    if (count < MAX_SIZE) {
-      history[count] = input;
-      count++;
-    }
+
+    if (history[index] != NULL)
+      free(history[index]);
+
+    history[index] = input;
+    index = (index + 1) % MAX_CAPACITY;
+    count++;
+
     if (strcmp(input, "print") == 0)
       print(history, count);
   }
