@@ -11,7 +11,7 @@ char *read_input() {
   ssize_t read;
   size_t len = 0;
 
-  printf("Enter input: ");
+  printf("Enter input:");
   if ((read = getline(&line, &len, stdin)) == -1) {
     perror("getline failed!\n");
   } else if (read > 0 && line[read - 1] == '\n') {
@@ -23,26 +23,11 @@ char *read_input() {
 }
 
 void store_history() {}
-void replace_history() {}
-
-void print(char **history, int count) {
-
-  for (int i = 0; i < count; i++) {
-    printf("%s\n", history[i]);
-  }
-}
 
 int main() {
-  char *history[MAX_SIZE] = {0};
-  int count = 0;
+  char history[MAX_SIZE] = {0};
   while (1) {
     char *input = read_input();
-    if (count < MAX_SIZE) {
-      history[count] = input;
-      count++;
-    }
-    if (strcmp(input, "print") == 0)
-      print(history, count);
   }
   return 0;
 }

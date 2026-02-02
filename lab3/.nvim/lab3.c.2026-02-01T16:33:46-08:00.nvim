@@ -23,17 +23,16 @@ char *read_input() {
 }
 
 void store_history() {}
-void replace_history() {}
 
-void print(char **history, int count) {
-
+void print(char** history, int count) {
+  
   for (int i = 0; i < count; i++) {
     printf("%s\n", history[i]);
   }
 }
 
 int main() {
-  char *history[MAX_SIZE] = {0};
+  char* history[MAX_SIZE] = {0};
   int count = 0;
   while (1) {
     char *input = read_input();
@@ -41,7 +40,7 @@ int main() {
       history[count] = input;
       count++;
     }
-    if (strcmp(input, "print") == 0)
+    if (strcmp(input, "print"))
       print(history, count);
   }
   return 0;

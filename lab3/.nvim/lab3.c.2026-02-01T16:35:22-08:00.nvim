@@ -23,7 +23,6 @@ char *read_input() {
 }
 
 void store_history() {}
-void replace_history() {}
 
 void print(char **history, int count) {
 
