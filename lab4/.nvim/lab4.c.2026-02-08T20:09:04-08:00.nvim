@@ -1,0 +1,28 @@
+#include <errno.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+struct header {
+  uint64_t size;
+  struct header *next;
+};
+
+void *increase_heap_size(__intptr_t size) {
+
+  void *address = sbrk(size);
+  if (address == -1) {
+    perror("sbrk() failed\n");
+    return NULL;
+  }
+  return address;
+}
+
+void *initialize_block(void *block_ptr, uint64_t size, struct header *next, ) {
+  
+  struct header* block = (struct header *)block_ptr;
+  block->size = 128;
+  return block;
+}
+int main(void) { return 0; }
