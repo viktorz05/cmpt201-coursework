@@ -1,0 +1,59 @@
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_SIZE 5
+
+char *read_input() {
+
+  char *line = NULL;
+  ssize_t read;
+  size_t len = 0;
+
+  printf("Enter input: ");
+  if ((read = getline(&line, &len, stdin)) == -1) {
+    perror("getline failed!\n");
+  } else if (read > 0 && line[read - 1] == '\n') {
+    line[read - 1] = '\0';
+  } else {
+    exit(1);
+  }
+  return line;
+}
+
+//void store_history() {}
+void replace_history(char** history) {
+
+  size_t len = sizeof(history) / sizeof(history[0]);
+  
+  for (int i = 0; i < len; i++) {
+    free(history[i]);
+  }
+  history = NULL;
+}
+
+void print(char **history, int count) {
+
+  for (int i = 0; i < count; i++) {
+    printf("%s\n", history[i]);
+  }
+}
+
+int main() {
+  char *history[MAX_SIZE] = {0};
+  int count = 0;
+  while (1) {
+    char *input = read_input();
+    if (strcmp(input, "print") == 0)
+      print(history, count);
+
+    if (count < MAX_SIZE) {
+       history[count] = input;
+       count++;
+     } else {
+       replace_history(history);
+      }
+  }
+  return 0;
+}

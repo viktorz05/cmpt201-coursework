@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include <unistd.h>
+
+void *increase_heap_size(intptr_t size) { void *address = sbrk(size); }
+
+int main() {
+  const intptr_t size = 256;
+
+  return 0;
+}
