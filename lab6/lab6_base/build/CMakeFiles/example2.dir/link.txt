@@ -1,1 +1,1 @@
-/usr/bin/cc -g -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/example2.dir/example_2.c.o -o example2
+/usr/bin/clang -g CMakeFiles/example2.dir/example_2.c.o -o example2 
