@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-#include <stdio.h>
-#include <unistd.h>
-
-void *increase_heap_size(intptr_t size) { void *address = sbrk(size); }
-
-int main() {
-  const intptr_t size = 256;
-
-=======
-#define _DEFAULT_SOURCE
 #include <errno.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -41,15 +30,6 @@ void print_out(char *format, void *data, size_t data_size) {
   write(STDOUT_FILENO, buf, len);
 }
 
-void print_block(struct header *block) {
-
-  size_t data_size = block->size - sizeof(struct header);
-  unsigned char *data = (unsigned char *)(block + 1);
-  for (size_t i = 0; i < data_size; i++) {
-    print_out("%u\n", data + i, sizeof(uint64_t));
-  }
-}
-
 void *increase_heap_size(__intptr_t size) {
 
   void *address = sbrk(size);
@@ -70,29 +50,24 @@ void *initialize_block(void *block_ptr, uint64_t size, struct header *next,
   return block;
 }
 int main(void) {
-
+  
+  void* start_addr = sbrk(0);
+  void* snd_addr = start_addr + BLOCK_SIZE;
+  
   increase_heap_size(HEAP_SIZE);
-  void *start_addr = sbrk(0);
-  if (!start_addr)
-    handle_error("sbrk()");
-
-  void *snd_addr = (char *)start_addr + BLOCK_SIZE;
 
   struct header *fst_block = (struct header *)start_addr;
   struct header *snd_block = (struct header *)snd_addr;
 
-  print_out("first block: \t%p\n", &fst_block, sizeof(void *));
-  print_out("second block: \t%p\n", &snd_block, sizeof(void *));
+  print_out("first block: \t%p", fst_block, sizeof(fst_block));
+  print_out("second block: \t%p", snd_block, sizeof(snd_block));
 
-  initialize_block(fst_block, BLOCK_SIZE, NULL, 0);
-  initialize_block(snd_block, BLOCK_SIZE, fst_block, 1);
+  print_out("first block size: \t%lu", &fst_block->size, sizeof(uint64_t));
+  print_out("first block next: \t%p", fst_block->next, sizeof(fst_block));
+  print_out("second block size: \t%lu", &snd_block->size, sizeof(uint64_t));
+  print_out("second block next: \t%p", snd_block->next, sizeof(snd_block));
 
-  print_out("first block size: %lu\n", &fst_block->size, sizeof(uint64_t));
-  print_out("first block next: %p\n", &fst_block->next, sizeof(fst_block));
-  print_out("second block size: %lu\n", &snd_block->size, sizeof(uint64_t));
-  print_out("second block next: %p\n", &snd_block->next, sizeof(snd_block));
-  print_block(fst_block);
-  print_block(snd_block);
->>>>>>> 7fd9a05d5d67ed98ce274bf3f3a9d819f3b1b624
-  return 0;
-}
+  void *block1 = initialize_block(fst_block, BLOCK_SIZE, NULL, 0);
+  void *block2 = initialize_block(snd_block, BLOCK_SIZE, fst_block, 1);
+
+  return 0; }

@@ -1,0 +1,25 @@
+#include <errno.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+struct header {
+  uint64_t size;
+  struct header *next;
+};
+
+void *increase_heap_size(__intptr_t size) {
+
+  void *address = sbrk(size);
+  if (address == -1) {
+    perror("sbrk() failed\n");
+    return NULL;
+  }
+  return address;
+}
+
+int main(void) {
+
+  return 0;
+}
