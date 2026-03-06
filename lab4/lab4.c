@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+#include <stdio.h>
+#include <unistd.h>
+
+void *increase_heap_size(intptr_t size) { void *address = sbrk(size); }
+
+int main() {
+  const intptr_t size = 256;
+
+=======
 #define _DEFAULT_SOURCE
 #include <errno.h>
 #include <stdint.h>
@@ -83,5 +93,6 @@ int main(void) {
   print_out("second block next: %p\n", &snd_block->next, sizeof(snd_block));
   print_block(fst_block);
   print_block(snd_block);
+>>>>>>> 7fd9a05d5d67ed98ce274bf3f3a9d819f3b1b624
   return 0;
 }

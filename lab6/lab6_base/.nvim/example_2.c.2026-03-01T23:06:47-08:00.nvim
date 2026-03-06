@@ -44,7 +44,7 @@ void insert_sorted(uint64_t data) {
   } else {
     node_t *curr = head;
     node_t *prev = NULL;
-
+    ASSERT(curr != NULL);
     while (curr != NULL) {
       if (data < curr->data) {
         break;
@@ -56,10 +56,10 @@ void insert_sorted(uint64_t data) {
 
     prev->next = new_node;
     if (curr != NULL) {
-      new_node->next = curr;
+      new_node->next = curr->next;
     }
   }
-  fprintf(stderr, "inserted %lu.\n ", new_node->data);
+
   info.sum += data;
   ASSERT(info.sum >= data);
 }
