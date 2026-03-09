@@ -93,28 +93,14 @@ void groupByKey(IntermediateInput *input, Output *output, int *result_count) {
       output[i].line_numbers[output[i].count] = line_no;
       output[i].count++;
       return;
+    } else {
+      Output *new;
+      new->line_numbers;
     }
   }
-  Output new;
-  int i = *result_count;
-  new.line_numbers[0] = line_no;
-  new.doubled_value = doubled_value;
-  new.count = 1;
-  output[i] = new;
-
-  (*result_count)++;
 }
 
 void reduce(Output *output) {
   // TODO:
   // Print the doubled number and line numbers
-  printf("(%d, [", output->doubled_value);
-
-  for (int i = 0; i < output->count; i++) {
-    printf("%d", output->line_numbers[i]);
-    if (i < output->count - 1) {
-      printf(", ");
-    }
-  }
-  printf("])\n");
 }
