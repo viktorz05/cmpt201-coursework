@@ -47,7 +47,8 @@ void *handle_client(void *arg) {
     // TODO: increase total_message_count per message
     pthread_mutex_lock(&count_mutex);
     total_message_count++;
-    printf("Msg #\t%d; Client ID %d: %s ", total_message_count, client_id, buf);
+    printf("Msg #\t%d; Client ID %d: %s ", total_message_count, client_id,
+           buf);
     pthread_mutex_unlock(&count_mutex);
   }
   if (bytes_read == -1)
