@@ -58,7 +58,6 @@ void *handle_client(void *arg) {
     handle_error("close");
 
   printf("Ending thread for client %d\n", client_id);
-  free(client);
   return NULL;
 }
 
@@ -87,10 +86,6 @@ int main() {
   for (;;) {
     // TODO: create a new thread when a new connection is encountered
     int connect_fd = accept(sfd, (struct sockaddr *)&addr, NULL);
-    if (connect_fd == -1) {
-      handle_error("accept");
-      continue;
-    }
     client_id_counter++;
     pthread_t th;
 
@@ -103,6 +98,7 @@ int main() {
       handle_error("pthread_create");
 
     pthread_detach(th);
+    free(args);
   }
 
   if (close(sfd) == -1) {
