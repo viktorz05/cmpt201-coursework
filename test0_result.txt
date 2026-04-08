@@ -1,0 +1,6 @@
+[INFO] Test 0 (one client and one type 0 message)
+
+127.0.0.1      37740     AF6280D444B21F1440BB
+[INFO] Comparing the client output to the received message
+
+Test 0 passed: 5 pts
